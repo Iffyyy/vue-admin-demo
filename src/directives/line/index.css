@@ -1,0 +1,7 @@
+.outer-list {
+  overflow-x: hidden;
+}
+
+.wrap-scroll {
+  width: 104%;
+}

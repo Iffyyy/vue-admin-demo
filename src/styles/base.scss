@@ -1,0 +1,137 @@
+/*存放基本类*/
+/*flex布局*/
+$direction:'column','';
+$justifyContent:'between','around','center','start','end','stretch';
+$alignItems:'start','end','center';
+
+@each $a in $alignItems {
+  $name:$a;
+  @if $a=='center' {
+    $name:$a;
+  }@else{
+    $name:flex-#{$a};
+  }
+
+  .flex-#{$a}{
+    display: flex;
+    align-items: #{$name};
+
+
+    @each $j in $justifyContent {
+      &-#{$j}{
+        $position:flex-#{$j};
+
+        @if $j=='between' {
+          $position:space-#{$j};
+        }
+
+        @if $j=='around' {
+          $position:space-#{$j};
+        }
+
+        @if $j=='stretch' {
+          $position:$j;
+        }
+
+        @if $j=='center' {
+          $position:#{$j};
+        }
+
+        display: flex;
+        justify-content: $position;
+        align-items: #{$name};
+
+        @each $d in $direction {
+            @if $d!=''{
+              $d:#{$d};
+            }
+
+          &-#{$d}{
+            display: flex;
+            flex-direction: #{$d};
+            justify-content: $position;
+            align-items: #{$name};
+          }
+        }
+      }
+    }
+  }
+}
+
+
+/*字体设置12-24*/
+@for $i from 12 to 25 {
+  .fontsize#{$i}{
+    font-size: #{$i}px;
+  }
+}
+
+/*动画延时*/
+@for $j from 2 to 20 {
+  .delay-#{$j}{
+    animation-delay: #{0.1*$j}s;  }
+}
+
+.fontbold{
+  font-weight: bold;
+}
+.fontweight500{
+  font-weight: 500;
+}
+
+/*字体颜色*/
+.white{
+  color: white;
+}
+
+$position:right,left,center;
+
+@each $p in $position {
+  .text-#{$p}{
+    text-align: $p;
+  }
+}
+
+.margintop10{
+  margin-top: 10px;
+}
+
+.margintop20{
+  margin-top: 20px;
+}
+.margintop30{
+  margin-top: 30px;
+}
+.marginleft4{
+  margin-left: 4px;
+}
+.marginleft10{
+  margin-left: 10px;
+}
+.marginleft4{
+  margin-left: 4%;
+}
+.margintop1{
+  margin-top: 1%;
+}
+.margintop2{
+  margin-top: 2%;
+}
+
+.side-part{
+  width: 0px;
+  max-height: 0;
+  border-top: 1.5px solid #56FFFF;
+  box-shadow: 0px 0 5px 0.5px #56FFFF;
+  transition: padding .3s,width .5s 1s,max-height .5s,border .3s,box-shadow .3s .3s;
+  overflow: hidden;
+}
+
+.entrance{
+  width: 410px;
+  max-height: 64%;
+  border-top-width: 0;
+  box-shadow: none;
+  transition: max-height .5s 1s,width .8s,border .3s 1.3s,box-shadow .3s 1s,padding .3s 1.3s;
+}
+

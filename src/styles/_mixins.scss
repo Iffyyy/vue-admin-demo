@@ -1,0 +1,25 @@
+/* Mixins */
+@mixin clearfix {
+  &:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+}
+
+@mixin pseudoele{
+  content: '';
+  display: inline-block;
+}
+
+@mixin inset($inset: 0) {
+  position: absolute;
+  top: $inset;
+  left: $inset;
+  right: $inset;
+  bottom: $inset;
+}
+
+@mixin bg($url: 0,$size:100% 100%,$posion:center) {
+  background: $posion / $size url('~@/assets/'+$url+'.png') no-repeat;
+}

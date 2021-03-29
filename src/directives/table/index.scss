@@ -1,0 +1,29 @@
+.wrap-scroll {
+  overflow: hidden;
+
+  .v-scroll-wrap{
+    width: calc(100% + 16px);
+    height: 100%;
+    overflow-x: hidden;
+    overflow-y: scroll;
+  }
+
+  
+
+  &-horizontal{
+
+    .v-scroll-wrap{
+      width: 100%;
+      display: flex;
+      overflow-x: hidden;
+
+      &:hover{        
+        overflow-x: scroll;
+      }
+    }
+
+    .v-scroll-list{    
+      display: flex;
+    }
+  }
+}
