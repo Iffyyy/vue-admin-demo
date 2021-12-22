@@ -42,9 +42,10 @@ export default class detail extends Vue {}
 .cube-magic {
   position: absolute;
   top: 200px;
-  left: 300px;
+  left: 50%;
   width: 200px;
   height: 200px;
+  transform: translateX(-50%);
   transform-style: preserve-3d;
   > div {
     position: absolute;

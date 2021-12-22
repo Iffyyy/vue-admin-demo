@@ -431,6 +431,14 @@ export default new Router({
     //   ]
     // },
     {
+      path: '/magic',
+      component: () => import(/* webpackChunkName: "tree" */ '@/views/demo/magic/index.vue'),
+      meta: {
+        title: '魔方',
+        icon: 'example'
+      }
+    },
+    {
       path: '*',
       redirect: '/404',
       meta: { hidden: true }
