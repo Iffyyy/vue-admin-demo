@@ -1,131 +1,231 @@
 <template>
-  <div class="nh-cube">
-    <div class="nh-cube-inner">
-      <div class="nh-cube-face nh-cube-up" />
-      <div class="nh-cube-face nh-cube-down" />
-      <div class="nh-cube-face nh-cube-left" />
-      <div class="nh-cube-face nh-cube-right" />
-      <div class="nh-cube-face nh-cube-before" />
-      <div class="nh-cube-face nh-cube-after" />
+  <div class="magic-wrap">
+    <div class="cube-magic">
+      <div class="cir cir1" />
+      <div class=" cir cir2" />
+      <div class="magic-container">
+        <Magic class="magic0" />
+        <Magic class="magic1" />
+        <Magic class="magic2" />
+        <Magic class="magic3" />
+        <Magic class="magic4" />
+        <Magic class="magic5" />
+        <Magic class="magic6" />
+        <Magic class="magic7" />
+      </div>
     </div>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue, Watch } from 'vue-property-decorator'
-import { Tree as ElTree } from 'element-ui'
-import { TreeData } from 'element-ui/types/tree'
-
+import { Component, Prop, Vue } from 'vue-property-decorator'
+import Magic from './components/magic.vue'
 @Component({
-  name: 'Magic'
+  name: 'CubeMagic',
+  components: { Magic }
 })
-export default class extends Vue {}
+export default class detail extends Vue {}
 </script>
-<style lang="scss" scoped>
-.nh-cube {
-  width: 240px;
-  height: 240px;
+<style scoped lang="scss">
+@mixin cover {
+  content: '';
+  display: inline-block;
   position: absolute;
-  z-index: 0;
-  left: 50%;
-  top: 50%;
-  margin: -194px 0 0 -120px;
-  transform-origin: 50% 50% -120px;
+  width: 100%;
+  height: 100%;
+}
+.magic-wrap{
+  width: 100vw;
+  height: 100vh;
+  background: #212b69;
+}
+.cube-magic {
+  position: absolute;
+  top: 200px;
+  left: 300px;
+  width: 200px;
+  height: 200px;
   transform-style: preserve-3d;
-  transform: scale(0.6);
-  animation: xd 10s linear infinite;
-
-  &-inner {
-    width: 240px;
-    height: 240px;
-    position: relative;
-    -webkit-transform-style: preserve-3d;
-    transition: 0.3s;
-    transform-origin: 50% 50% -120px;
-    -webkit-perspective: 100000px;
-    perspective: 100000px;
-    transform: rotateX(20deg) rotateZ(45deg);
-  }
-
-  &-face {
+  > div {
     position: absolute;
-    width: 240px;
-    height: 240px;
-    border: 1px dashed #00ccff;
-    background: rgba(0, 173, 255, 0.1);
-    background-blend-mode: screen;
-    box-shadow: inset 0 0 30px rgba(57, 117, 206, 0.59), 0 0 30px rgba(0, 103, 255, 0.84);
-
-    &::before,
-    &::after {
-      content: '';
-      position: absolute;
-      top: -2px;
-      width: 10px;
-      height: 10px;
-      border-color: #00ccff;
-      border-style: solid;
-      border-top-width: 2px;
-      border-bottom-width: 0;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  .title {
+    color: white;
+    top: 126%;
+    font-size: 32px;
+    width: 160px;
+    text-align: center;
+  }
+  .magic-container {
+    width: 100px;
+    height: 100px;
+    animation: xd 30s linear infinite;
+    /* transform-style: preserve-3d; */
+    top: 40%;
+    left: 26%;
+    cursor: pointer;
+    z-index: 99;
+    @keyframes xd {
+      0% {
+        transform: rotate(0deg);
+      }
+      100% {
+        transform: rotate(360deg);
+      }
     }
-    &::before {
-      left: -2px;
-      border-left-width: 2px;
-      border-right-width: 0;
+    /* 扩大点击区域 */
+    &:before {
+      @include cover;
+      width: 140%;
+      height: 140%;
+      top: -15px;
+      left: -15px;
+      transform: rotate(45deg);
     }
-
-    &::after {
-      right: -2px;
-      border-left-width: 0;
-      border-right-width: 2px;
+    &:hover {
+      animation-play-state: paused;
+      $distance: 14px;
+      $offset: 6px;
+      $scale: 0.68;
+      .nh-cube {
+        transition: transform 1s;
+        animation-duration: 0s;
+      }
+      .magic0{
+        transform: translateY(-$distance) scale($scale);
+      }
+      .magic4 {
+        transform: translateX($offset) translateY(-$distance) scale($scale);
+      }
+      .magic1{
+        transform: translateX(-$distance) scale($scale);
+      }
+      .magic5 {
+        transform: translateX(-$distance + $offset) scale($scale);
+      }
+      .magic2{
+        transform: translateX($distance) scale($scale);
+      }
+      .magic6 {
+        transform: translateX($distance + $offset) scale($scale);
+      }
+      .magic3 {
+        transform: translateY($distance) scale($scale);
+      }
+      .magic7 {
+        transform: translateX($offset) translateY($distance) scale($scale);
+      }
     }
   }
-
-  &-up {
-    left: 0;
-    top: -240px;
-    transform: rotateX(90deg);
-    transform-origin: bottom;
+  $angleX: 64deg;
+  $angleY: 20deg;
+  $bg: #02fff6;
+  $lightBg: #b6fff5;
+  .cir {
+    top: 20%;
+    left: -8%;
+    width: 230px;
+    height: 230px;
+    transform: rotateX($angleX) rotateY($angleY);
+    border: 4px solid $lightBg;
+    border-radius: 50%;
+    box-shadow: 0 0 16px rgba($bg, 0.6), 0 0 16px rgba($bg, 0.6) inset, 0 0 10px $lightBg, 0 0 10px $lightBg inset;
+    mask-image: linear-gradient(0deg, rgba(white, 0.9) 0%, rgba($lightBg, 0.7) 30%, rgba($bg, 0));
+    /* animation: rotate 8s infinite linear; */
   }
-
-  &-down {
-    left: 0;
-    top: 240px;
-    transform-origin: top;
-    -webkit-transform: rotateX(-90deg);
+  .cir1 {
+    animation: rotate 16s -3s infinite linear alternate;
   }
-  &-left {
-    left: -240px;
-    top: 0;
-    transform-origin: right;
-    -webkit-transform: rotateY(-90deg);
+  .cir2 {
+    transform: rotateX($angleX) rotateY(-$angleY);
+    animation: rotate1 16s infinite linear;
   }
-  &-right {
-    right: -240px;
-    top: 0;
-    transform-origin: left;
-    transform: rotateY(90deg);
+  .cir3 {
+    transform: rotateX($angleX);
   }
-  &-before {
-    left: 0;
-    top: 0;
-    transform-origin: center;
-    /* -webkit-transform: rotateX(-90deg); */
-  }
-
-  &-after {
-    left: 0;
-    top: 0;
-    -webkit-transform: translateZ(-240px) rotateX(180deg);
-  }
-
-  @keyframes xd {
-    0%{
-      transform: rotateX(0deg) rotateY(0deg);
+  @keyframes rotate {
+    0%,
+    100% {
+      transform: rotateX($angleX) rotateY($angleY) rotate(0deg);
     }
-    100%{
-      transform: rotateX(360deg) rotateY(360deg);
+    50% {
+      transform: rotateX($angleX) rotateY($angleY) rotate(360deg);
     }
+  }
+  @keyframes rotate1 {
+    0%,
+    100% {
+      transform: rotateX($angleX) rotateY(-$angleY) rotate(0deg);
+    }
+    50% {
+      transform: rotateX($angleX) rotateY(-$angleY) rotate(360deg);
+    }
+  }
+  .magic0 {
+    top: -40%;
+    left: 10%;
+    z-index: 4;
+  }
+  .magic1 {
+    top: -4%;
+    left: -28%;
+    z-index: 10;
+  }
+  .magic2 {
+    top: -4%;
+    left: 48%;
+    z-index: 10;
+    animation: translateMove1 10s infinite;
+    @keyframes translateMove1 {
+      0%,
+      60%,
+      100% {
+        transform: translateX(0) scale(0.6);
+      }
+      6%,
+      40% {
+        transform: translateX(24%) scale(0.7);
+      }
+    }
+  }
+  .magic3 {
+    top: 30%;
+    left: 10%;
+    z-index: 10;
+    animation: translateMove 10s infinite -4s;
+    @keyframes translateMove {
+      0%,
+      60%,
+      100% {
+        transform: translateY(0) scale(0.6);
+      }
+      8%,
+      50% {
+        transform: translateY(24%) scale(0.7);
+      }
+    }
+  }
+  .magic4 {
+    top: -20%;
+    left: 10%;
+    z-index: 2;
+  }
+  .magic5 {
+    top: 16%;
+    left: -28%;
+    z-index: 4;
+  }
+  .magic6 {
+    top: 16%;
+    left: 48%;
+    z-index: 4;
+  }
+  .magic7 {
+    top: 50%;
+    left: 10%;
+    z-index: 4;
   }
 }
 </style>
