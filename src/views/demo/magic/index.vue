@@ -62,13 +62,13 @@ export default class detail extends Vue {}
   .magic-container {
     width: 100px;
     height: 100px;
-    animation: xd 30s linear infinite;
-    /* transform-style: preserve-3d; */
+    animation: xuanzhan 30s linear infinite;
+    transform-style: preserve-3d;
     top: 40%;
     left: 26%;
     cursor: pointer;
     z-index: 99;
-    @keyframes xd {
+    @keyframes xuanzhan {
       0% {
         transform: rotate(0deg);
       }
@@ -134,7 +134,6 @@ export default class detail extends Vue {}
     border-radius: 50%;
     box-shadow: 0 0 16px rgba($bg, 0.6), 0 0 16px rgba($bg, 0.6) inset, 0 0 10px $lightBg, 0 0 10px $lightBg inset;
     mask-image: linear-gradient(0deg, rgba(white, 0.9) 0%, rgba($lightBg, 0.7) 30%, rgba($bg, 0));
-    /* animation: rotate 8s infinite linear; */
   }
   .cir1 {
     animation: rotate 16s -3s infinite linear alternate;
