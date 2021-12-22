@@ -54,11 +54,3 @@ export const randomColor = function() {
     a: Math.random()
   }
 }
-
-export const createBuffer = function(gl:WebGLRenderingContext, obj:any, options:Partial<{size: number, type: number, normalized: boolean, stride: number, offset: number}>) {
-  const colorBuffer = gl.createBuffer()
-  gl.bindBuffer(gl.ARRAY_BUFFER, colorBuffer)
-  const { size = 1, type = gl.FLOAT, normalized = false, stride = 0, offset = 0 } = options
-  gl.vertexAttribPointer(obj, size, type, normalized, stride, offset)
-  return colorBuffer
-}

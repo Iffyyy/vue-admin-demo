@@ -8,7 +8,7 @@
 
 <script lang="ts">
 import { Component, Vue, Watch } from 'vue-property-decorator'
-import { getCanvas, createBuffer, getWebGLContext, createShaderFromScript, createProgram, randomColor } from '@/utils/webgl-helper'
+import { getCanvas, getWebGLContext, createShaderFromScript, createProgram, randomColor } from '@/utils/webgl-helper'
 
 @Component({
   name: 'Three'
@@ -26,25 +26,20 @@ export default class extends Vue {
     attribute vec2 a_Position;
     // 接收 canvas 的尺寸(width, height)
     attribute vec2 a_Screen_Size;
-    //接收 JavaScript 传递的顶点颜色
-    attribute vec4 a_Color;
-    //传往片元着色器的颜色。
-    varying vec4 v_Color;
     void main(){
         vec2 position = (a_Position / a_Screen_Size) * 2.0 - 1.0;
         position = position * vec2(1.0,-1.0);
-        gl_Position = vec4(position, 0.0, 1.0);
-        v_Color = a_Color;
+        gl_Position = vec4(position, 0, 1);
     }`
 
     const fshaderSource = `
     //设置浮点数据类型为中级精度
     precision mediump float;
     //接收 JavaScript 传过来的颜色值（rgba）。
-    varying vec4 v_Color;
+    uniform vec4 u_Color;
 
     void main(){
-      vec4 color = v_Color / vec4(255, 255, 255, 1);
+      vec4 color = u_Color / vec4(255, 255, 255, 1);
       gl_FragColor = color;
     }`
 
@@ -69,44 +64,48 @@ export default class extends Vue {
     // 用上一步设置的清空画布颜色清空画布。
     gl.clear(gl.COLOR_BUFFER_BIT)
 
-    const positions: number[] = []
-    const colors: number[] = []
-    // 找到顶点着色器中的变量aScreenSize
-    const aScreenSize = gl.getAttribLocation(program, 'a_Screen_Size')
-    gl.vertexAttrib2f(aScreenSize, canvas.width, canvas.height)
-
+    const positions:number[] = []
     // 找到顶点着色器中的变量aPosition
     const aPosition = gl.getAttribLocation(program, 'a_Position')
-    const aColor = gl.getAttribLocation(program, 'a_Color')
+    // 找到顶点着色器中的变量aScreenSize
+    const aScreenSize = gl.getAttribLocation(program, 'a_Screen_Size')
+    const uColor = gl.getUniformLocation(program, 'u_Color')
 
-    gl.enableVertexAttribArray(aPosition)
-    gl.enableVertexAttribArray(aColor)
-
-    // const buffer = createBuffer(gl, aPosition, { size: 2 })
-
-    // 将 aPosition 变量获取数据的缓冲区指向当前绑定的 buffer。
-    // const colorBuffer = createBuffer(gl, aColor, { size: 4 })
     const buffer = gl.createBuffer()
     gl.bindBuffer(gl.ARRAY_BUFFER, buffer)
 
-    gl.vertexAttribPointer(aColor, 4, gl.FLOAT, false, 24, 8)
+    gl.enableVertexAttribArray(aPosition)
 
-    gl.vertexAttribPointer(aPosition, 2, gl.FLOAT, false, 24, 0)
+    // 每次取两个数据
+    const size = 2
+    // 每个数据的类型是32位浮点型
+    const type = gl.FLOAT
+    // 不需要归一化数据
+    const normalize = false
+    // 每次迭代运行需要移动数据数 * 每个数据所占内存 到下一个数据开始点。
+    const stride = 0
+    // 从缓冲起始位置开始读取
+    const offset = 0
+    // 将 aPosition 变量获取数据的缓冲区指向当前绑定的 buffer。
+    gl.vertexAttribPointer(aPosition, size, type, normalize, stride, offset)
+    gl.vertexAttrib2f(aScreenSize, canvas.width, canvas.height)
+
+    // 绘制图元设置为三角形
+    // const primitiveType = gl.TRIANGLES
+    // 从顶点数组的开始位置取顶点数据
+    // 因为我们要绘制三个点，所以执行三次顶点绘制操作。
+    // const count = 3
+    // gl.drawArrays(primitiveType, offset, count)
 
     canvas.addEventListener('mouseup', e => {
       const x = e.offsetX
       const y = e.offsetY
       positions.push(x, y)
-      const color = randomColor()
-      positions.push(color.r, color.g, color.b, color.a)
-      if (positions.length % 18 === 0) {
-        // 向缓冲区中复制新的顶点数据。
-        // gl.bindBuffer(gl.ARRAY_BUFFER, buffer)
-        // gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(positions), gl.DYNAMIC_DRAW)
-        // gl.bindBuffer(gl.ARRAY_BUFFER, colorBuffer)
-        // gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(colors), gl.DYNAMIC_DRAW)
-        gl.bindBuffer(gl.ARRAY_BUFFER, buffer)
-        gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(positions), gl.STATIC_DRAW)
+      if (positions.length % 6 === 0) {
+      // 向缓冲区中复制新的顶点数据。
+        gl.bufferData(gl.ARRAY_BUFFER, new Float32Array(positions), gl.DYNAMIC_DRAW)
+        const color = randomColor()
+        gl.uniform4f(uColor, color.r, color.g, color.b, color.a)
         // 重新渲染
         renderGl(gl)
       }
@@ -115,7 +114,7 @@ export default class extends Vue {
     gl.clearColor(0, 0, 0, 1)
 
     // 渲染函数
-    function renderGl(gl: any) {
+    function renderGl(gl:any) {
       // 用上一步设置的清空画布颜色清空画布。
       gl.clear(gl.COLOR_BUFFER_BIT)
       // 绘制图元设置为三角形
@@ -124,7 +123,7 @@ export default class extends Vue {
       const drawOffset = 0
       // 因为我们要绘制 N 个点，所以执行 N 次顶点绘制操作。
       if (positions.length > 0) {
-        gl.drawArrays(primitiveType, drawOffset, positions.length / 6)
+        gl.drawArrays(primitiveType, drawOffset, positions.length / 2)
       }
     }
     renderGl(gl)
