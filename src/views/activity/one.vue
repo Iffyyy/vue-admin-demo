@@ -16,7 +16,7 @@
     position: relative;
     width: 40px;
     height: 100px;
-    background: linear-gradient(90deg,#4d0007,#e64743,#6e0009);
+    background: linear-gradient(90deg,#6e0009,#e64743,#6e0009);
 
     &::before,&::after{
       content: '';
