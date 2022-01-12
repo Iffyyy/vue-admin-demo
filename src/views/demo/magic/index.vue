@@ -87,10 +87,11 @@ export default class detail extends Vue {}
     }
     &:hover {
       animation-play-state: paused;
+
       $distance: 14px;
       $offset: 6px;
       $scale: 0.68;
-      .nh-cube {
+      .cube {
         transition: transform 1s;
         animation-duration: 0s;
       }

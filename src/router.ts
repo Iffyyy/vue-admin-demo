@@ -304,38 +304,10 @@ export default new Router({
       ]
     },
     {
-      path: '/form',
-      component: Layout,
-      children: [
-        {
-          path: 'index',
-          component: () => import(/* webpackChunkName: "form" */ '@/views/form/index.vue'),
-          meta: {
-            title: '表单',
-            icon: 'form'
-          }
-        }
-      ]
-    },
-    {
-      path: '/table',
-      component: Layout,
-      children: [
-        {
-          path: 'index',
-          component: () => import(/* webpackChunkName: "form" */ '@/views/table/index.vue'),
-          meta: {
-            title: '表格',
-            icon: 'form'
-          }
-        }
-      ]
-    },
-    {
       path: '/xiaoce',
       component: Layout,
       meta: {
-        title: '小册学习',
+        title: 'webgl学习',
         icon: 'form'
       },
       children: [
@@ -435,6 +407,14 @@ export default new Router({
       component: () => import(/* webpackChunkName: "tree" */ '@/views/demo/magic/index.vue'),
       meta: {
         title: '魔方',
+        icon: 'example'
+      }
+    },
+    {
+      path: '/bianpao',
+      component: () => import(/* webpackChunkName: "form" */ '@/views/activity/bianpao.vue'),
+      meta: {
+        title: '鞭炮',
         icon: 'example'
       }
     },
