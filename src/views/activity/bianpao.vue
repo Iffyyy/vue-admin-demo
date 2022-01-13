@@ -30,6 +30,7 @@ export default {
   height: 380px;
   margin: 0 auto;
   transform-origin: top;
+  padding: 20px;
 }
 .main {
   width: 2px;
@@ -41,7 +42,7 @@ export default {
   animation: ranshao 2s forwards;
 
   @keyframes ranshao {
-    84%{
+    90%{
       opacity: 1;
       height: 80px;
     }
@@ -53,57 +54,52 @@ export default {
 
   .container {
     position: absolute;
+    transform-origin: top;
     animation: drop 1s forwards;
   }
 
   @keyframes drop{
     80%,100%{
-      transform: scale(0.3) rotate(0deg) translateY(1600px);
+      transform: scale(0.3) rotate(0deg) translateY(2000px);
       opacity: 0;
     }
   }
 
   .container:nth-child(2n) {
-    left: -15px;
+    left: -28px;
   }
   .container:nth-child(2n + 1) {
-    right: -26px;
-    transform-origin: top;
+    right: -28px;
   }
 
   .last-one {
     transform: scale(0.4) rotate(10deg);
-    bottom: -100px;
-    /* z-index: -1; */
+    bottom: -126px;
   }
 
   @for $i from 1 through 20 {
-    $init: 14px;
     $angle: #{random(70) + 20}deg;
     @if ($i % 2 == 0) {
-      $init: -20px;
       $angle: -#{random(70) + 20}deg;
     }
 
     .container:nth-child(#{$i}) {
-      top: $init + $i * 8px;
+      top: 14px + $i * 8px;
       transform: scale(0.4) rotate($angle);
       animation-delay: #{(20 - $i)*0.1}s;
     }
   }
 
   @for $i from 20 through 40 {
-    $init: 14px;
     $angle: #{random(70) + 7}deg;
     @if ($i % 2 == 0) {
-      $init: -20px;
       $angle: -#{random(70) + 7}deg;
     }
 
     .container:nth-child(#{$i}) {
-      top: $init + ($i - 20) * 8px;
+      top: 14px + ($i - 20) * 8px;
       transform: scale(0.4) rotate($angle);
-      animation-delay: #{(40 - $i)*0.1}s;
+      animation-delay: #{(40 - $i)*0.09}s;
     }
   }
 }
@@ -128,7 +124,6 @@ $yellow: #fdf410;
   transform: translateX(-50%);
   width: 200px;
   height: 200px;
-  /* background: rgba(173, 216, 230, 0.514); */
   .spot {
     position: absolute;
     background: radial-gradient(rgba($yellow, 0.6), rgba($yellow, 0.1));
@@ -164,7 +159,6 @@ $yellow: #fdf410;
   transform: translateX(-50%);
   width: 160px;
   height: 160px;
-  /* background: rgba(173, 216, 230, 0.514); */
 
   .suipian {
     position: absolute;
@@ -176,7 +170,6 @@ $yellow: #fdf410;
       height: #{random($limit: 6) + 8}px;
       top: #{random($limit: 120) + 6}px;
       left: #{random($limit: 120) + 6}px;
-      /* animation-delay: -#{random($limit: 4)}s; */
       background: rgba(random(100) + 155, random(100), random(100), 1);
 
       @if ($i % 3 == 0) {
