@@ -35,7 +35,7 @@ export default {
 }
 .main {
   width: 2px;
-  height: 52.6%;
+  height: 180px;
   background: black;
   margin: 40px auto;
   position: relative;
@@ -45,11 +45,11 @@ export default {
   @keyframes ranshao {
     90%{
       opacity: 1;
-      height: 80px;
+      height: 60px;
     }
     100%{
       opacity: 0;
-      height: 80px;
+      height: 60px;
     }
   }
 
@@ -75,7 +75,7 @@ export default {
 
   .last-one {
     transform: scale(0.4) rotate(10deg);
-    bottom: -126px;
+    bottom: -122px;
   }
 
   @for $i from 1 through 20 {
