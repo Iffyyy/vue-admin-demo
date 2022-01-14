@@ -64,14 +64,11 @@
       content: '';
       position: absolute;
       display: inline-block;
+      top: 3px;
       width: 100%;
       height: 20px;
       border-radius: 50%;
       background: linear-gradient(90deg,#6e0009,#e64743,#6e0009);
-    }
-
-    &::before{
-      top: 3px;
     }
 
     &.cicle1{

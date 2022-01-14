@@ -27,10 +27,11 @@ export default {
 .bianpao {
   position: relative;
   width: 400px;
-  height: 380px;
+  height: 500px;
   margin: 0 auto;
   transform-origin: top;
   padding: 20px;
+  overflow: hidden;
 }
 .main {
   width: 2px;
@@ -86,7 +87,7 @@ export default {
     .container:nth-child(#{$i}) {
       top: 14px + $i * 8px;
       transform: scale(0.4) rotate($angle);
-      animation-delay: #{(20 - $i)*0.1}s;
+      animation-delay: #{(20 - $i)*0.08}s;
     }
   }
 
@@ -99,7 +100,7 @@ export default {
     .container:nth-child(#{$i}) {
       top: 14px + ($i - 20) * 8px;
       transform: scale(0.4) rotate($angle);
-      animation-delay: #{(40 - $i)*0.09}s;
+      animation-delay: #{(40 - $i)*0.1}s;
     }
   }
 }
